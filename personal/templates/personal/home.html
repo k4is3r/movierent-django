@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home
+{% endblock title  %}
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <h1 class="display-4">Movie Rent</h1>
+  <p class="lead">Choose the movie you like and you can rent or buy</p>
+</div>
+<hr>
+<div class="container">
+  <div class="d-flex flex-column">
+   <h4>All Movies</h4>
+   {% for account in accounts %}
+     <p>{{ account }} </p>
+   {% endfor %}
+  </div>
+</div>
+{% endblock content %}
