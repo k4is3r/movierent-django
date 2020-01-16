@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     #My Apps
     'personal',
     'account',
+    'movie',
     #Django APPs
     'django.contrib.admin',
     'django.contrib.auth',
