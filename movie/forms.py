@@ -23,7 +23,6 @@ class UpdateMovieForm(forms.ModelForm):
                  'stock',
                  'rentail_price',
                  'sale_price',
-                 'avility'
                 ]
     
     def save(self, commit=True):
@@ -33,7 +32,7 @@ class UpdateMovieForm(forms.ModelForm):
         movie.stock =  self.cleaned_data['stock']
         movie.rentail_price =  self.cleaned_data['rentail_price']
         movie.sale_price =  self.cleaned_data['sale_price']
-        movie.avility =  self.cleaned_data['avility']
+        
         
         if self.cleaned_data['image']:
             movie.image = self.cleaned_data['image']

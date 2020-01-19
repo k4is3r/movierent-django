@@ -57,7 +57,6 @@ def edit_movie_view(request, slug):
                    "stock": movie.stock,
                    "rentail_price": movie.rentail_price,
                    "sale_price": movie.sale_price,
-                   "avility" : movie.avility,
            } 
         )
     content['form'] = form
