@@ -1,20 +1,74 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}
 Home
 {% endblock title  %}
 {% block content %}
+<style type="text/css">
+
+	@media (max-width: 768px) { 
+		.right-column{
+			margin-left: 0px;
+		}
+	}
+
+	@media (min-width: 768px) { 
+		.right-column{
+			margin-left: 20px;
+		}
+	}
+
+	.movie-post-container{
+		background-color: #fff;
+		margin-bottom: 20px;
+		width: 100%;
+	}
+	.create-post-bar{
+		background-color: #fff;
+		margin-bottom:20px;
+	}
+
+	.left-column{
+		padding:0px;
+	}
+
+	.right-column{
+		padding:0px;
+	}
+
+</style>
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
   <h1 class="display-4">Movie Rent</h1>
   <p class="lead">Choose the movie you like and you can rent or buy</p>
 </div>
 <hr>
 <div class="container">
-  <div class="d-flex flex-column">
-   <h4>All Movies</h4>
-   {% for account in accounts %}
-     <p>{{ account }} </p>
-   {% endfor %}
-  </div>
-</div>
+ <div class="row">
+   <!--Right Add Movie -->
+   <div class="create-post-bar d-lg-none col-lg-7 offset-lg-1">
+     <p><a href="{% url 'movie:create' %}">Add Movie</a></p>
+   </div><!--EndAddMovie-->
+   <!--StartFeed-->
+   <div class="left-column col-lg-7 offset-lg-1">
+	{% for movie in movie_list %}	
+          {% if movie.avility %}
+            <div class="movie-post-container">
+	      {% include 'movie/snippets/movie_snippets.html' with movie=movie %}
+	    </div>
+          {% endif %}<!--EndIFMovie-->
+        {% endfor %}<!--ForMovie-->
+   </div><!--EndFeed-->
+   <!--Right AddMovie2-->
+   <div class="right-column col-lg-3 d-lg-flex d-none flex-column">
+
+        <div class="create-post-bar">
+	<p>Stuff</p>
+	<p>Stuff</p>
+	<p>Stuff</p>
+	<p><a href="{% url 'movie:create' %}">Add Movie</a></p>
+	</div>
+		
+   </div><!--EndRightMovie2-->
+ </div><!--EndRow --> 
+</div><!--EndContainer
 {% endblock content %}

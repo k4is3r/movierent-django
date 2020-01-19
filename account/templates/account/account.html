@@ -33,6 +33,11 @@
   .h3{
     text-align: center;
   }
+  .movie-list{
+    max-width: 500px;
+    width: 100%;
+    margin: auto;
+  }
 </style>
 
 
@@ -69,5 +74,23 @@
 <div class="d-flex flex-column">
   <a class="m-auto" href="{% url 'password_change' %}"> Change Password</a>
 </div>
+
+<div class="container mt-4 p-4">
+  <div class="row">
+    <div class="movie-list">
+      <h3 class=" mb-3 font-weight-normal">Movie List</h3>
+      {% if movie_list %}
+      <ul>
+      {% for movie in movie_list %}
+        <a href="{% url 'movie:detail' movie.slug %}" class="text-decoration-none">
+          <li class="list-group-item">{{ movie }}</li>
+        </a>
+      {% endfor %}
+      </ul>
+     {% endif %}
+    </div>
+  </div>
+</div>
+
 
 {% endblock content %}

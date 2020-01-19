@@ -25,7 +25,7 @@ SECRET_KEY = 'azwy$kd10a7c+y2)%*@h@woly)cbdylq1*m)i5zef%ov-$y6ck'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.12','localhost','127.0.0.1']
+ALLOWED_HOSTS = ['192.168.100.89','192.168.1.12','localhost','127.0.0.1']
 
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' #During Development
@@ -131,6 +131,13 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.0/howto/static-files/
+
+STATICFILES_DIRS = [
+     os.path.join(BASE_DIR, 'static'),
+     os.path.join(BASE_DIR, 'media'),
+]
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+STATIC_ROOT =  os.path.join(BASE_DIR, 'static_cdn')
+MEDIA_ROOT =  os.path.join(BASE_DIR, 'media_cdn')

@@ -1,0 +1,35 @@
+<style type="text/css">
+	.card{
+		max-width: 700px;
+	}
+	.card-body{
+		padding: 20px;
+	}
+</style>
+
+<div class="container">
+  <div class="row">
+    <!-- Blog Post -->
+    <div class="card m-auto">
+      <a href="{% url 'movie:detail' movie.slug %}">
+        <img class="card-img-top" src="{{movie.image.url}}">
+      </a>
+			
+      <div class="card-body mt-2 mb-2">
+        <a href="{% url 'movie:detail' movie.slug %}">
+          <h2 class="card-title">{{movie.title}}</h2>
+        </a>
+        <p class="card-text">{{movie.description|truncatechars:140}}</p>
+        <p class="card-text">{{movie.descriprion|safe|truncatechars:180}}</p>
+        <p class="card-text">Rentail Price: $<strong>{{movie.rentail_price}}</strong></p>
+        <p class="card-text">Sale Price: $<strong>{{movie.sale_price}}</strong></p>
+        {% if movie.owner == request.user %}
+        <a href="{% url 'movie:edit' movie.slug %}" class="btn btn-primary">Update</a>
+        {% endif %}
+      </div><!--EndCardBody-->
+      <div class="card-footer text-muted">
+        Published on {{movie.date_published}} by {{movie.owner}}
+      </div><!--EndCardFooter-->
+    </div><!--EndCard-->
+  </div><!--EndRow-->
+</div><!--EndContainer-->

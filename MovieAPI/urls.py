@@ -1,7 +1,9 @@
 from django.contrib import admin
 from django.conf import settings
 from rest_framework.authtoken import views
-from django.urls import path
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views 
 from personal.views import (
      home_screen_view,
@@ -12,18 +14,21 @@ from account.views import (
      logout_view,
      login_view,
      account_view,
+     must_authenticate_view,
 )
 
 urlpatterns = [
     path('admin', admin.site.urls),
     path('', home_screen_view, name="home"),
+    path('movie/', include('movie.urls','movie')),
     path('register/', registration_view, name="register"),
+    path('must_authenticate/', must_authenticate_view, name="must_authenticate"),
     path('logout/', logout_view, name="logout"),
     path('login/', login_view, name="login"),
     path('account/', account_view, name="account"), 
     path('password_change/done/', 
         auth_views.PasswordChangeDoneView.as_view(template_name='registration/password_change_done.html'), 
-        name='password_change_complete'),
+        name='password_change_done'),
 
     path('password_change/', 
         auth_views.PasswordChangeView.as_view(template_name='registration/password_change.html'), 
@@ -46,3 +51,6 @@ urlpatterns = [
         name='password_reset_complete'),
 ]
 
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root= settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

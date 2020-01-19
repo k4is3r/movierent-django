@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Movie Detail{% endblock title %}
+
+{% block content %}
+<style type="text/css">
+  .card{
+    max-width: 700px;
+  }
+
+  .container{
+    padding: 20px;
+  }
+</style>
+
+<div class="container">
+  <div class="row">
+    
+    <!--MovieDetail-->
+    <div class="card m-auto">
+      <img class="card-img-top" src="{{ movie.image.url }}">
+      <div class="card-body my-2">
+        <h2 class="card-title">{{ movie.title }}</h2>
+        <p class="card-text">{{ movie.description|safe }}</p>
+        <p class="card-text">Stock: <strong>{{ movie.stock }}</strong></p>
+        <p class="card-text">Retail Price: <strong>${{movie.rentail_price}}</strong></p>
+        <p class="card-text">Sale Price: <strong>${{movie.sale_price}}</strong></p>
+        {% if movie.owner == request.user %}
+          <a class="btn btn-primary"  href="{% url 'movie:edit' movie.slug %}">Update</a> 
+        {% endif %}       
+      </div><!--EndCardBody-->
+      <div class="card-footer text-muted">
+        Published on {{ movie.date_published }} by {{ movie.owner }}
+      </div><!--EndCardFooter-->
+    </div><!--EndCard-->
+    <!--End MovieDetail-->
+  </div><!--EndRow-->
+</div><!--EndContainer-->
+
+{% endblock content %}
