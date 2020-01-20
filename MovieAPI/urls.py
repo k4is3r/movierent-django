@@ -29,7 +29,7 @@ urlpatterns = [
 
     #REST FRAMEWORk
     path('api/movie/', include('movie.api.urls','movie_api')),
-    
+    path('api/account/', include('account.api.urls','account_api')),
 
 
 
