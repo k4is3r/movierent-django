@@ -1,12 +1,14 @@
 <style type="text/css">
 	.card{
-		max-width: 700px;
+	   max-width: 700px;
+           width: 100%;
 	}
 	.card-body{
-		padding: 20px;
+	   padding: 20px;
+                
 	}
 </style>
-
+{% if movie %}
 <div class="container">
   <div class="row">
     <!-- Blog Post -->
@@ -20,7 +22,7 @@
           <h2 class="card-title">{{movie.title}}</h2>
         </a>
         <p class="card-text">{{movie.description|truncatechars:140}}</p>
-        <p class="card-text">{{movie.descriprion|safe|truncatechars:180}}</p>
+        
         <p class="card-text">Rentail Price: $<strong>{{movie.rentail_price}}</strong></p>
         <p class="card-text">Sale Price: $<strong>{{movie.sale_price}}</strong></p>
         {% if movie.owner == request.user %}
@@ -33,3 +35,17 @@
     </div><!--EndCard-->
   </div><!--EndRow-->
 </div><!--EndContainer-->
+{% else %}
+
+<div class="container">
+  <div class="row">
+    <div class="card m-auto">
+      <div class="card-body mt-2 mb-2 ">
+        <h2 class="card-title">No result</h2>
+        <p class="card-text">There were no results matching your search: "{{query}}"</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endif %}
