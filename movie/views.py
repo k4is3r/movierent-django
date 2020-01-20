@@ -95,6 +95,11 @@ def get_movie_queryset(query=None):
     return list(set(queryset))
 
 
+def delete_movie_view(request, slug):
+    content = {}
+    movie_to_delete = get_object_or_404(MoviesRent, slug=slug)
+    movie_to_delete.delete()
+    return render(request,'movie/edit_movie.html', content)
 
 
 
