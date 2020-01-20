@@ -22,15 +22,15 @@
           <h2 class="card-title">{{movie.title}}</h2>
         </a>
         <p class="card-text">{{movie.description|truncatechars:140}}</p>
-        
-        <p class="card-text">Rentail Price: $<strong>{{movie.rentail_price}}</strong></p>
-        <p class="card-text">Sale Price: $<strong>{{movie.sale_price}}</strong></p>
+        <p class="card-text"><strong>{{movie.likes}} Likes</strong></p>        
+        <p class="card-text">Rentail Price: <strong>${{movie.rentail_price}}</strong></p>
+        <p class="card-text">Sale Price: <strong>${{movie.sale_price}}</strong></p>
         {% if movie.owner == request.user %}
         <a href="{% url 'movie:edit' movie.slug %}" class="btn btn-primary">Update</a>
         {% endif %}
       </div><!--EndCardBody-->
       <div class="card-footer text-muted">
-        Published on {{movie.date_published}} by {{movie.owner}}
+        Published on {{movie.date_published}} by {{movie.owner.username}}
       </div><!--EndCardFooter-->
     </div><!--EndCard-->
   </div><!--EndRow-->

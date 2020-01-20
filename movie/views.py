@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
 from django.http import HttpResponse
-
-from movie.models import MoviesRent
+from copy import deepcopy
+from movie.models import MoviesRent, UpdateLog
 from movie.forms import CreateMovieForm, UpdateMovieForm
 from account.models import Account
 
@@ -45,6 +45,10 @@ def edit_movie_view(request, slug):
 
     movie = get_object_or_404(MoviesRent, slug=slug)
     
+    if movie:
+        update_log = deepcopy(movie)
+        
+
     if movie.owner != user:
         return HttpResponse("You cannot edit Movie items")
 
@@ -55,6 +59,14 @@ def edit_movie_view(request, slug):
             obj.save()
             content['success_message'] = "Updated"
             movie = obj
+            update_form = UpdateLog()
+            update_form.title = update_log.title
+            update_form.old_rentail_price = update_log.rentail_price
+            update_form.old_sale_price = update_log.sale_price
+            update_form.save()
+
+
+
     form = UpdateMovieForm(
            initial ={
                    "title": movie.title,

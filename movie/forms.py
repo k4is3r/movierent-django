@@ -1,5 +1,5 @@
 from django import forms
-from movie.models import MoviesRent
+from movie.models import MoviesRent, UpdateLog
 
 class CreateMovieForm(forms.ModelForm):
     
@@ -40,4 +40,14 @@ class UpdateMovieForm(forms.ModelForm):
         if commit:
             movie.save()
         return movie
-        
+
+
+#class UpdateMoviLog(forms.ModelForm):
+    
+#    class Meta:
+#        model = UpdateLog
+#        fields = ['title',
+#                  'old_rentail_price',
+ #                 'old_sale_price',]
+
+    

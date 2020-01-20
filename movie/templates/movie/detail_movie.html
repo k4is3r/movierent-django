@@ -22,6 +22,7 @@
       <div class="card-body my-2">
         <h2 class="card-title">{{ movie.title }}</h2>
         <p class="card-text">{{ movie.description }}</p>
+        <p class="card-text"><strong>{{movie.likes}} Likes</strong></p>
         {% if user.is_admin %}
         <p class="card-text">Stock: <strong>{{ movie.stock }}</strong></p>
         {% endif %}
@@ -29,10 +30,15 @@
         <p class="card-text">Sale Price: <strong>${{movie.sale_price}}</strong></p>
         {% if movie.owner == request.user %}
           <a class="btn btn-primary"  href="{% url 'movie:edit' movie.slug %}">Update</a> 
-        {% endif %}       
+        {% endif %}
+       {% if user.is_authenticated %} 
+       <a class="btn btn-primary" href="#">Rent</a>
+       <a class="btn btn-primary" href="#">Buy</a>
+       {% endif %}      
       </div><!--EndCardBody-->
+      
       <div class="card-footer text-muted">
-        Published on {{ movie.date_published }} by {{ movie.owner }}
+        Published on {{ movie.date_published }} by {{ movie.owner.username }}
       </div><!--EndCardFooter-->
     </div><!--EndCard-->
     <!--End MovieDetail-->

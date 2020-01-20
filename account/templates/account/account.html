@@ -74,21 +74,49 @@
 <div class="d-flex flex-column">
   <a class="m-auto" href="{% url 'password_change' %}"> Change Password</a>
 </div>
+
 {% if user.is_admin %}
 <div class="container mt-4 p-4">
-  <div class="row">
-    <div class="movie-list">
-      <h3 class=" mb-3 font-weight-normal">Movie List</h3>
+  <div class="row" id="panel-user">
+   <!--MovieList--> 
+   <div class="col-sm">
+      <h3 class=" mt-0 font-weight-normal">Movie List</h3>
       {% if movie_list %}
       <ul>
-      {% for movie in movie_list %}
-        <a href="{% url 'movie:detail' movie.slug %}" class="text-decoration-none">
+        {% for movie in movie_list %}
+        <a href="{%url 'movie:detail' movie.slug%}" class="text-decoration-none" > 
           <li class="list-group-item">{{ movie }}</li>
         </a>
       {% endfor %}
       </ul>
      {% endif %}
     </div>
+    <!--EndMovieList-->
+
+   <!--MovieUpdateLog-->
+   <div class="col-sm">
+     <h3 class="mb-3 font-weight-normal">Movie Update Log</h3>
+     {% if movie_log %}
+     <ul>
+       {% for log in movie_log %}
+         <li class="list-group-item">
+           <p class="m-auto">{{log.title}}</p>
+           <p class="m-auto">Old Rentail Price: ${{log.old_rentail_price}}</p>
+           <p class="m-auto">Old Sale Price: ${{log.old_sale_price}}</p>
+           <p class="m-auto">Last Update: {{log.update_date}}</p>
+         </li>
+       {% endfor %}
+     </ul>
+     {% endif %}
+   </div>
+   <!--EndMovieUpdateLog-->
+   
+   <!--Rentails&PurchaseLog-->
+   <div class="col-sm">
+     <h3 class="mb-3 font-weight-normal">Rentail & Purchase Log</h3>
+   </div>
+   <!--EndRentail&PurchaseLog-->
+
   </div>
 </div>
 {% endif %}

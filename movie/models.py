@@ -4,7 +4,7 @@ from django.utils.text import slugify
 from django.conf import settings
 from django.db.models.signals import post_delete, pre_save
 from django.dispatch import receiver
-
+from account.models import Account
 
 def img_location(instance, filename, **kwargs ):
 	file_path = 'movie/{title}-{filename}'.format(
@@ -29,6 +29,17 @@ class MoviesRent(models.Model):
         return self.title
 
 
+class UpdateLog(models.Model):
+    title = models.CharField(max_length=60,null=False, blank=False)
+    old_rentail_price = models.FloatField(null=False)
+    old_sale_price = models.FloatField(null=False)
+    update_date = models.DateTimeField(auto_now_add=True, verbose_name='date updated')
+
+    def __str__(self):
+        return self.title    
+
+
+
 @receiver(post_delete, sender=MoviesRent)
 def submission_delete(sender, instance, **kwargs):
     instance.image.delete(False)
@@ -39,3 +50,7 @@ def pre_save_movie_post(sender, instance, *args, **kwargs):
         instance.slug = slugify(instance.owner.username + "-" + instance.title)
 
 pre_save.connect(pre_save_movie_post, sender=MoviesRent)
+
+
+
+
