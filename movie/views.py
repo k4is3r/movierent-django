@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
 from django.http import HttpResponse
 from copy import deepcopy
-from movie.models import MoviesRent, UpdateLog
+from movie.models import MoviesRent, UpdateLog, UserSaleHistory
 from movie.forms import CreateMovieForm, UpdateMovieForm
 from account.models import Account
 
@@ -102,7 +102,16 @@ def delete_movie_view(request, slug):
     return render(request,'movie/edit_movie.html', content)
 
 
-def add_rentail_movie(request, slug):
+def add_sale_movie(request, slug):
     user = request.user
     movie = get_object_or_404(MoviesRent, slug=slug)
+    sale_price = movie.sale_price
+    sale_movie = UserSaleHistory.objects.create(user=user,
+                                                movie=movie,
+                                                movie_price=sale_price)
+    sale_movie.save()
+    return redirect('movie:details',slug=slug)
+
+
+
     
