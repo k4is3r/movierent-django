@@ -52,5 +52,15 @@ def pre_save_movie_post(sender, instance, *args, **kwargs):
 pre_save.connect(pre_save_movie_post, sender=MoviesRent)
 
 
+class UserSaleHistory(models.Model):
+    
+    user = models.ForeignKey(Account, on_delete=modelsl.CASCADE)
+    date_sale = models.DateTimeField(auto_now_add=True)
+    movie = models.ForeignKey(MoviesRent, on_delete=models.CASCADE)
+    movie_price = models.FloatField(default=0.0)
+
+    def __str__(self):
+        return self.account.username
+
 
 
