@@ -102,4 +102,7 @@ def delete_movie_view(request, slug):
     return render(request,'movie/edit_movie.html', content)
 
 
-
+def add_rentail_movie(request, slug):
+    user = request.user
+    movie = get_object_or_404(MoviesRent, slug=slug)
+    

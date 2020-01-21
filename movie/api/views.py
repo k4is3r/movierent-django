@@ -3,6 +3,11 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.generics import ListAPIView
+from rest_framework.filters import SearchFilter, OrderingFilter
+
+
 from account.models import Account
 from movie.models import MoviesRent, UpdateLog
 from movie.api.serializers import MovieRentSerializer
@@ -101,6 +106,10 @@ def api_create_movie_view(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    
-    
+class ApiMovieListView(ListAPIView):
+    queryset = MoviesRent.objects.all()
+    serializer_class = MovieRentSerializer
+    pagination_class = PageNumberPagination
+    filter_backends = (SearchFilter, OrderingFilter)
+    search_fields = ('title','description')
  
