@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout 
 from account.forms import RegistrationForm, AccountAuthenticationForm, AccountUpdateForm
 
-from movie.models import MoviesRent, UpdateLog
+from movie.models import MoviesRent, UpdateLog, UserSaleHistory
 
 def registration_view(request):
 
@@ -78,6 +78,8 @@ def account_view(request):
     content['movie_list'] = movie_list
     movie_log = UpdateLog.objects.filter()
     content['movie_log'] = movie_log
+    movie_purchase = UserSaleHistory.objects.filter(user=request.user)
+    content['movie_purchase'] = movie_purchase
     return render(request, 'account/account.html', content)
 
 

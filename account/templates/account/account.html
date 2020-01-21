@@ -110,15 +110,26 @@
      {% endif %}
    </div>
    <!--EndMovieUpdateLog-->
-   
+   {% endif %}  
    <!--Rentails&PurchaseLog-->
    <div class="col-sm">
      <h3 class="mb-3 font-weight-normal">Rentail & Purchase Log</h3>
+      {% if movie_purchase %}
+      <ul>
+        {% for purchase in movie_purchase %}
+         <li class="list-group-item">
+           <p class="m-auto">{{purchase.movie.title}}</p>
+           <p class="m-auto">Pirce: ${{purchase.movie_price}}</p>
+           <p class="m-auto">Purchase {{purchase.date_sale}}</p>
+         </li>
+       {% endfor %}                    
+     </ul>
+      {% endif %}
    </div>
    <!--EndRentail&PurchaseLog-->
 
   </div>
 </div>
-{% endif %}
+
 
 {% endblock content %}
