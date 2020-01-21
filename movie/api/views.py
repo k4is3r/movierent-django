@@ -1,6 +1,8 @@
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.authentication import TokenAuthentication
 from account.models import Account
 from movie.models import MoviesRent, UpdateLog
 from movie.api.serializers import MovieRentSerializer
@@ -8,6 +10,8 @@ from copy import deepcopy
 
 
 @api_view(['GET', ])
+#@authentication_classes((TokenAuthentication,))
+#@permission_classes((IsAuthenticated,))
 def api_detail_movie_view(request, slug):
     
     try:
@@ -22,6 +26,8 @@ def api_detail_movie_view(request, slug):
 
 
 @api_view(['PUT', ])
+@authentication_classes((TokenAuthentication,))
+@permission_classes((IsAuthenticated,))
 def api_update_movie_view(request, slug):
     
     try:
@@ -29,6 +35,11 @@ def api_update_movie_view(request, slug):
 
     except MoviesRent.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    user = request.user
+
+    if movie_list.owner != user:
+        return Response({'response':'You dont have permission to edit'})
     
     old_movie = deepcopy(movie_list)
 
@@ -46,7 +57,10 @@ def api_update_movie_view(request, slug):
             return Response(data=data)
         return Response(serializers.errors, status= status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(['DELETE', ])
+@authentication_classes((TokenAuthentication,))
+@permission_classes((IsAuthenticated,))
 def api_delete_movie_view(request, slug):
     
     try:
@@ -54,7 +68,12 @@ def api_delete_movie_view(request, slug):
 
     except MoviesRent.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-    
+   
+    user = request.user
+
+    if movie_list.owner != user:
+        return Response({'response':'You dont have permission to delete this movie'})
+ 
     if request.method == "DELETE":
         operation = movie_list.delete()
         data = {}
@@ -66,9 +85,11 @@ def api_delete_movie_view(request, slug):
 
 
 @api_view(['POST', ])
+@authentication_classes((TokenAuthentication,))
+@permission_classes((IsAuthenticated,IsAdminUser))
 def api_create_movie_view(request):
     
-    account = Account.objects.get(pk=1)
+    account = request.user
     
     movie = MoviesRent(owner=account)
     
