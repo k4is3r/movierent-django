@@ -104,13 +104,19 @@ def delete_movie_view(request, slug):
 
 def add_sale_movie(request, slug):
     user = request.user
+    content = {} 
     movie = get_object_or_404(MoviesRent, slug=slug)
     sale_price = movie.sale_price
-    sale_movie = UserSaleHistory.objects.create(user=user,
-                                                movie=movie,
-                                                movie_price=sale_price)
-    sale_movie.save()
-    return redirect('movie:details',slug=slug)
+    check_purchase = UserSaleHistory.objects.filter(user=user,movie=movie)
+    if check_purchase.exists():
+        content['success_message'] = "You cannot buy the same item "
+    else:
+        sale_movie = UserSaleHistory(user=user,
+                                     movie=movie,
+                                     movie_price=sale_price)
+        sale_movie.save()
+        content['success_message'] = "Success Buy"
+    return render(request,'movie/detail_movie.html',content)
 
 
 

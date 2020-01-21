@@ -67,7 +67,7 @@ class UserSaleHistory(models.Model):
     movie_price = models.FloatField(default=0.0)
 
     def __str__(self):
-        return self.account.username
+        return self.user.username
 
 
 
