@@ -15,12 +15,14 @@
 
 <div class="container">
   <div class="row">
-     {% if success_message %}
+    
+     <div class="card m-auto">
+      {% if success_message %}
        <h3 style="color:green; text-align: center;">{{success_message}}</h3>
      {% endif %}
    
     <!--MovieDetail-->
-    <div class="card m-auto">
+    <!--  <div class="card m-auto">-->
       <img class="card-img-top" src="{{ movie.image.url }}">
       <div class="card-body my-2">
         <h2 class="card-title">{{ movie.title }}</h2>
