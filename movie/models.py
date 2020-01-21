@@ -5,6 +5,8 @@ from django.conf import settings
 from django.db.models.signals import post_delete, pre_save
 from django.dispatch import receiver
 from account.models import Account
+from django.shortcuts import reverse 
+
 
 def img_location(instance, filename, **kwargs ):
 	file_path = 'movie/{title}-{filename}'.format(
@@ -27,6 +29,11 @@ class MoviesRent(models.Model):
     
     def __str__(self):
         return self.title
+    
+    def get_add_sale_history(self):
+        return reverse('movie:add-sale', kwargs={
+               'slug':self.slug
+        })
 
 
 class UpdateLog(models.Model):
