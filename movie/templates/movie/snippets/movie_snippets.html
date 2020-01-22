@@ -18,7 +18,7 @@
       </a>
 			
       <div class="card-body mt-2 mb-2">
-        <a href="{% url 'movie:detail' movie.slug %}">
+        <a class="text-decoration-none" href="{% url 'movie:detail' movie.slug %}">
           <h2 class="card-title">{{movie.title}}</h2>
         </a>
         <p class="card-text">{{movie.description|truncatechars:140}}</p>
