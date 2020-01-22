@@ -18,7 +18,7 @@ from account.views import (
 )
 
 urlpatterns = [
-    path('admin', admin.site.urls),
+    path('movie-dashboard', admin.site.urls),
     path('', home_screen_view, name="home"),
     path('movie/', include('movie.urls','movie')),
     path('register/', registration_view, name="register"),
