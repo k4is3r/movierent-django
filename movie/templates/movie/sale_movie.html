@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %} Succes Purchase {% endblock %}
+
+{% block content%}
+
+<div class="container">
+    <div class="row align-items-center">
+        <div class="col-sm"></div>
+        <div class="col-sm">
+        {% if success_message %}
+            <h3 class="m-auto text-center">Congratulations you have now {{ movie.title }}  in your account</h3>
+            <h3 style="color:green; text-align: center;">{{success_message}}</h3>
+       {% endif %}
+
+       {% if doublesale_message %}
+            <h3 class="m-auto text-center">{{ movie.title }} is in your account</h3>
+            <h3 style="color:red; text-align: center;">{{doublesale_message}}</h3>
+       {% endif %}
+       </div>
+       <div class="col-sm"></div>
+    </div>
+</div>
+
+{% endblock %}

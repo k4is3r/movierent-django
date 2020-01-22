@@ -9,9 +9,9 @@ from account.models import Account
 
 def create_movie_view(request):
     content = {}
-    
+
     user = request.user
-    
+
     if not user.is_authenticated:
         return redirect('must_authenticate')
 
@@ -24,30 +24,30 @@ def create_movie_view(request):
         form = CreateMovieForm()
 
     content['form'] = form
- 
+
     return render(request, "movie/create_movie.html", content)
 
 def detail_movie_view(request, slug):
     content = {}
-    
+
     movie = get_object_or_404(MoviesRent, slug=slug)
     content['movie'] = movie
-    
+
     return render(request, 'movie/detail_movie.html', content)
 
 
 def edit_movie_view(request, slug):
     content = {}
-    
+
     user = request.user
     if not user.is_authenticated:
         return redirect("must_authenticate")
 
     movie = get_object_or_404(MoviesRent, slug=slug)
-    
+
     if movie:
         update_log = deepcopy(movie)
-        
+
 
     if movie.owner != user:
         return HttpResponse("You cannot edit Movie items")
@@ -91,7 +91,7 @@ def get_movie_queryset(query=None):
             ).distinct()
         for movie in movies:
             queryset.append(movie)
-    
+
     return list(set(queryset))
 
 
@@ -104,20 +104,19 @@ def delete_movie_view(request, slug):
 
 def add_sale_movie(request, slug):
     user = request.user
-    content = {} 
+    content = {}
     movie = get_object_or_404(MoviesRent, slug=slug)
     sale_price = movie.sale_price
     check_purchase = UserSaleHistory.objects.filter(user=user,movie=movie)
     if check_purchase.exists():
-        content['success_message'] = "You cannot buy the same item "
+        content['doublesale_message'] = "You cannot buy the same item twice"
     else:
         sale_movie = UserSaleHistory(user=user,
                                      movie=movie,
                                      movie_price=sale_price)
         sale_movie.save()
         content['success_message'] = "Success Buy"
-    return render(request,'movie/detail_movie.html',content)
 
+    content['movie'] = movie
+    return render(request,'movie/sale_movie.html',content)
 
-
-    
